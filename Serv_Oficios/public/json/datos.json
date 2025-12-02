@@ -12,7 +12,7 @@
       "estado": "Activo"
     },
     {
-      "id": 1,
+      "id": 2,
       "foto": "https://img.freepik.com/foto-gratis/joven-hombre-barbudo-camisa-rayas_273609-5677.jpg?semt=ais_hybrid&w=740&q=80",
       "nombreCompleto": "Alex Carranza",
       "numero": 980661525,
@@ -23,7 +23,7 @@
       "estado": "Activo"
     },
     {
-      "id": 1,
+      "id": 3,
       "foto": "https://img.freepik.com/foto-gratis/joven-hombre-barbudo-camisa-rayas_273609-5677.jpg?semt=ais_hybrid&w=740&q=80",
       "nombreCompleto": "Noemi Coello",
       "numero": 980661525,
@@ -34,7 +34,7 @@
       "estado": "Activo"
     },
     {
-      "id": 1,
+      "id": 4,
       "foto": "https://img.freepik.com/foto-gratis/joven-hombre-barbudo-camisa-rayas_273609-5677.jpg?semt=ais_hybrid&w=740&q=80",
       "nombreCompleto": "Luis Franco",
       "numero": 980661525,
@@ -45,7 +45,7 @@
       "estado": "Activo"
     },
     {
-      "id": 1,
+      "id": 5,
       "foto": "https://img.freepik.com/foto-gratis/joven-hombre-barbudo-camisa-rayas_273609-5677.jpg?semt=ais_hybrid&w=740&q=80",
       "nombreCompleto": "Jorge Perez",
       "numero": 980661525,
@@ -54,6 +54,38 @@
       "ciudad": "Loja",
       "experiencia": "5 Años",
       "estado": "Activo"
+    }
+  ],
+  "resenas": [
+    {
+      "id": 1,
+      "titulo": "Excelente servicio",
+      "contenido": "El técnico fue muy puntual y resolvió el problema rápidamente. Muy profesional.",
+      "calificacion": 5,
+      "fecha": "2024-01-15",
+      "solicitud_id": 101,
+      "nombreUsuario": "María González",
+      "inicialesUsuario": "MG"
+    },
+    {
+      "id": 2,
+      "titulo": "Buen trabajo pero con demora",
+      "contenido": "La calidad del servicio fue buena, pero llegaron 30 minutos tarde a la cita programada.",
+      "calificacion": 3,
+      "fecha": "2024-01-10",
+      "solicitud_id": 102,
+      "nombreUsuario": "Carlos Rodríguez",
+      "inicialesUsuario": "CR"
+    },
+    {
+      "id": 3,
+      "titulo": "No quedé satisfecho",
+      "contenido": "El problema se volvió a presentar a los dos días. Tuve que solicitar otro servicio.",
+      "calificacion": 1,
+      "fecha": "2024-01-05",
+      "solicitud_id": 103,
+      "nombreUsuario": "Ana López",
+      "inicialesUsuario": "AL"
     }
   ]
 }
