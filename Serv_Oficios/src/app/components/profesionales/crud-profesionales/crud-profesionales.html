@@ -1,0 +1,268 @@
+
+<h5 class="p-3"> Profesionales<hr></h5>
+
+<div class="card m-3 mw-100">
+  <div class="card-body row align-items-center">
+    <div class="col-12 col-sm-10 mb-3 mb-sm-0">
+        <h3 class="card-title"><i class="bi bi-people me-2"></i>Gestión de Profesionales</h3>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Administra los proveedores de servicios</h6>
+    </div>
+
+    <div class="col-12 col-sm-2 text-sm-end">
+        <button class="b-style w-100 w-sm-auto mt-sm-2" (click)="abrirNuevo()">
+          <i class="bi bi-plus me-2 ms-4"></i>Nuevo Profesional
+        </button>
+    </div>
+  </div>
+</div>
+
+<!--Componente Reutilizable-->
+<app-search
+    (searchChange)="filtrar($event)"
+    place="Buscar profesionales por nombre, categoría o ciudad...">
+></app-search>
+
+<!--table-->
+<div class="card m-3 p-3">
+    <table class="table table-responsive">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Contacto</th>
+                <th>Categoria</th>
+                <th>Ciudad</th>
+                <th>Experiencia</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+                @if (profesion.length===0) {
+                    <p>No hay</p>
+                }@else {
+                    @for (p of profesionalPagina | filtrar:filtro; track $index) {
+                        <tr>
+                            <td class="row w-auto">
+                                <div class="col-md-2" style="width: 70px; height: 50px;">
+                                    <img [src]="p.foto"  class="img-fluid h-100 rounded-circle">
+                                </div>
+                                <div class="col-md-7">
+                                    {{p.nombreCompleto}}
+                                </div>
+                            
+                            </td>
+                            <td class="text-body-secondary">
+                                <i class="bi bi-envelope-at me-2"></i>{{p.correo}}<br> 
+                                <i class="bi bi-telephone me-2"></i>{{p.numero}}
+                            </td>
+                            <td >
+                                <div class="rounded-5 badge text-primary text-wrap" style="background-color: var(--bs-primary-bg-subtle); width: 6rem;">
+                                    {{getCategorias(p.categoria)}}
+                                </div>
+                            </td>
+                            <td>{{p.ciudad}}</td>
+                            <td>{{p.experiencia}}</td>
+                            <td>
+                                @if (p.estado==='Disponible') {
+                                    <div class="rounded-5 badge text-success text-wrap" style="background-color: var(--bs-success-bg-subtle); width: 6rem;">
+                                        {{p.estado}}
+                                    </div>
+                                }@else {
+                                    <div class="rounded-5 badge text-danger text-wrap" style="background-color: var(--bs-danger-bg-subtle); width: 6rem;">
+                                        {{p.estado}}
+                                    </div>
+                                }
+                                
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                                    <button type="button" class="btn btn-outline-primary" (click)="editar(p)"><i class="bi bi-pen"></i></button>
+                                    @if (p.estado === 'No disponible') {
+                                        <button type="button" class="btn btn-outline-danger ms-2" disabled (click)="eliminarProfesional(p)"><i class="bi bi-trash"></i></button>
+                                    }@else {
+                                        <button type="button" class="btn btn-outline-danger ms-2" (click)="eliminarProfesional(p)"><i class="bi bi-trash"></i></button>
+                                    }
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                }
+        </tbody>
+    </table>
+
+    <!--Paginación-->
+    @if (totalPages > 1) {
+        <nav>
+            <ul class="pagination justify-content-center">
+                <!-- Anterior -->
+                <li class="page-item" [class.disabled]="page === 1">
+                <button class="page-link" (click)="cambiarPagina(page - 1)">Anterior</button>
+                </li>
+
+                <!-- Números -->
+                @for (i of [].constructor(totalPages); let idx = $index; track idx) {
+                <li class="page-item" [class.active]="page === idx + 1">
+                    <button class="page-link" (click)="cambiarPagina(idx + 1)">
+                    {{ idx + 1 }}
+                    </button>
+                </li>
+                }
+
+                <!-- Siguiente -->
+                <li class="page-item" [class.disabled]="page === totalPages">
+                <button class="page-link" (click)="cambiarPagina(page + 1)">Siguiente</button>
+                </li>
+            </ul>
+        </nav>
+    }
+  
+</div>
+
+<!--Modal-->
+<div class="modal fade" tabindex="-1" #modalProfesionalRef>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
+            {{isEditing ? 'Actualizar Datos' : 'Nuevo Profesioanl'}}
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+            <form [formGroup]="formProfesionales" class="row g-3 mb-5">
+                <!--Nombre-->
+                <div class="col-md-6">
+                    <label class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-control" placeholder="Bryan Carranza" formControlName="nombreCompleto">
+                    <span class="error">
+                        @if(formProfesionales.get('nombreCompleto')?.invalid && (formProfesionales.get('nombreCompleto')?.dirty) || (formProfesionales.get('nombreCompleto')?.touched) ){
+                            @if (formProfesionales.get('nombreCompleto')?.errors?.['required']) {
+                                Por favor, ingresa el nombre completo del profesional.
+                            }
+                        }
+                    </span>
+
+                </div>
+
+                <!--Correo-->
+                <div class="col-md-6">
+                    <label class="form-label">Correo</label>
+                    <input type="text" class="form-control" placeholder="Bryan@gmail.com" formControlName="correo">
+                    <span class="error">
+                        @if (formProfesionales.get('correo')?.invalid &&  formProfesionales.get('correo')?.dirty || formProfesionales.get('correo')?.touched) {
+                            @if (formProfesionales.get('correo')?.errors?.['required']) {
+                                Por favor, ingresa un correo obligatorio.
+                            }
+                            @if (formProfesionales.get('correo')?.errors?.['email']) {
+                                Necesitamos un correo electrónico válido.
+                            }
+
+                            @if (this.formProfesionales.get('correo')?.errors?.['DominioInvalido']) {
+                                El correo debe terminar en .com
+                            }
+                        }
+                    </span>
+                </div>
+
+                <!--Telefono-->
+                <div class="col-md-6">
+                    <label for="validationCustom03" class="form-label">Telefono</label>
+                    <input type="text" class="form-control" placeholder="0980616659" formControlName="numero">
+                    <span class="error">
+                        @if (formProfesionales.get('numero')?.invalid && formProfesionales.get('numero')?.dirty || formProfesionales.get('numero')?.touched) {
+                            @if (formProfesionales.get('numero')?.errors?.['required']) {
+                                El teléfono es obligatorio.
+                            }
+                            @if (formProfesionales.get('numero')?.errors?.['pattern']) {
+                                Solo se permiten numeros
+                            }
+                            @if (this.formProfesionales.get('numero')?.errors?.['maxlength']) {
+                                Solo se permiten 10 digitos
+                            }
+                        }
+                    </span>
+                </div>
+
+                <!--Categoria-->
+                <div class="col-md-6">
+                    <label for="validationCustom04" class="form-label">Categoria del Oficio</label>
+                    <select class="form-select" formControlName="categoria">
+                        @for (c of categorias; track $index) {
+                            <option [value]="c.id">{{c.nombre}}</option>
+                        }
+                    </select>
+                    <span class="error">
+                        @if (formProfesionales.get('categoria')?.invalid && formProfesionales.get('categoria')?.dirty || formProfesionales.get('categoria')?.touched) {
+                            @if (formProfesionales.get('categoria')?.errors?.['required']) {
+                                Selecciona el oficio o área de especialidad.
+                            }
+                        }
+                    </span>
+                </div>
+
+                <!--Foto-->
+                <div class="col-12">
+                    <label for="validationCustom04" class="form-label">Url Foto</label>
+                    <input type="url" placeholder="https://example.com" class="form-control" formControlName="foto">
+                    <span class="error">
+                        @if (formProfesionales.get('foto')?.invalid && formProfesionales.get('foto')?.dirty || formProfesionales.get('foto')?.touched) {
+                            @if (formProfesionales.get('foto')?.errors?.['required']) {
+                                Este campo es obligatorio para mostrar la foto del profesional.
+                            }
+                            @if (formProfesionales.get('foto')?.errors?.['urlInvalida']) {
+                                Ingresa una URL válida de imagen.
+                            }
+                        }
+                    </span>
+                </div>
+
+                <!--Ciudad-->
+                <div class="col-md-6">
+                    <label for="validationCustom05" class="form-label">Ciudad de Trabajo</label>
+                    <select class="form-select" formControlName="ciudad">
+                        <option>Guayaquil</option>
+                        <option>Manta</option>
+                        <option>Quito</option>
+                        <option>Cuenca</option>
+                    </select>
+                    <span class="error">
+                        @if (formProfesionales.get('ciudad')?.invalid && formProfesionales.get('ciudad')?.dirty || formProfesionales.get('ciudad')?.touched) {
+                            @if (formProfesionales.get('ciudad')?.errors?.['required']) {
+                                Selecciona la ciudad donde trabajas.
+                            }
+                        }
+                    </span>
+                </div>
+
+                <!--Años de Experiencia-->
+                <div class="col-md-6">
+                    <label for="validationCustom05" class="form-label">Años de Experiencia</label>
+                    <input type="text"class="form-control" placeholder="5 Años" formControlName="experiencia">
+                    <span class="error">
+                        @if (formProfesionales.get('experiencia')?.invalid && formProfesionales.get('experiencia')?.dirty || formProfesionales.get('experiencia')?.touched ) {
+                            @if (formProfesionales.get('experiencia')?.errors?.['required']) {
+                                La experiencia es obligatoria.
+                            }
+                            @if (formProfesionales.get('experiencia')?.errors?.['campoInvalido']) {
+                                El campo debe finalizar con la palabra Años
+                            }
+                        }
+                    </span>
+                </div>
+
+                <!--Cheked-->
+                <div>
+                    <input class="form-check-input me-1" type="checkbox" formControlName="estado">
+                    <label class="form-check-label" for="checkChecked">Disponible para trabajos</label>
+                </div>
+
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" (click)="guardar()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

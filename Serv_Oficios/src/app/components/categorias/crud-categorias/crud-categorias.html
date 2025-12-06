@@ -1,0 +1,192 @@
+<h5 class="p-3"> Categorías<hr></h5>
+
+<div class="card m-3 mw-100">
+  <div class="card-body row align-items-center">
+    <div class="col-12 col-sm-10 mb-3 mb-sm-0">
+        <h3 class="card-title"><i class="bi bi-tag me-2"></i>Gestión de Categorías</h3>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Administra los tipos de oficios disponibles</h6>
+    </div>
+
+    <div class="col-12 col-sm-2 text-sm-end">
+        <button class="b-style w-100 w-sm-auto mt-sm-2" (click)="abrirNuevo()">
+          <i class="bi bi-plus me-2 ms-4"></i>Nuevo Categoría
+        </button>
+    </div>
+  </div>
+</div>
+
+<!--Componente Reutilizable-->
+<app-search
+    (searchChange)="filtrar($event)"
+    place="Buscar Categorías">
+></app-search>
+
+<!--table-->
+<div class="card m-3 p-3">
+    <!--Datos de la tabla-->
+    <div class="table-responsive ">
+        <table class="table table-hover ">
+            <thead class="table-dark"> 
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                    @if (categorias.length===0) {
+                        <p>No hay</p>
+                    }@else {
+                        @for (c of categoriaPagina | filtrarC:filtro; track $index) {
+                            <tr>
+                                <td>{{c.nombre}}</td>
+                                <td>{{c.descripcion}}</td>
+                                <td>
+                                    @if (c.estado==='Activa') {
+                                        <div class="rounded-5 badge text-success text-wrap" style="background-color: var(--bs-success-bg-subtle); width: 6rem;">
+                                            {{c.estado}}
+                                        </div>
+                                    }@else {
+                                        <div class="rounded-5 badge text-danger text-wrap" style="background-color: var(--bs-danger-bg-subtle); width: 6rem;">
+                                            @if (c.estado === 'Inactiva') {
+                                                {{c.estado}}
+                                            }
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                                        <button type="button" class="btn btn-outline-primary" (click)="editar(c)"><i class="bi bi-pen"></i></button>
+                                        @if (c.estado === 'Inactiva') {
+                                            <button type="button" class="btn btn-outline-danger ms-2" disabled (click)="eliminar(c)"><i class="bi bi-trash"></i></button>
+                                        }@else {
+                                            <button type="button" class="btn btn-outline-danger ms-2" (click)="eliminar(c)"><i class="bi bi-trash"></i></button>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+            </tbody>
+        </table>
+    </div>
+    
+    <!--Paginación-->
+    @if (totalPages > 1) {
+        <nav>
+            <ul class="pagination justify-content-center">
+                <!-- Anterior -->
+                <li class="page-item" [class.disabled]="page === 1">
+                <button class="page-link" (click)="cambiarPagina(page - 1)">Anterior</button>
+                </li>
+
+                <!-- Números -->
+                @for (i of [].constructor(totalPages); let idx = $index; track idx) {
+                <li class="page-item" [class.active]="page === idx + 1">
+                    <button class="page-link" (click)="cambiarPagina(idx + 1)">
+                    {{ idx + 1 }}
+                    </button>
+                </li>
+                }
+
+                <!-- Siguiente -->
+                <li class="page-item" [class.disabled]="page === totalPages">
+                <button class="page-link" (click)="cambiarPagina(page + 1)">Siguiente</button>
+                </li>
+            </ul>
+        </nav>
+    }
+  
+</div>
+
+<!--Card con el conteo de las categorias-->
+<div class="row m-3 d-flex justify-content-center align-items-center">
+    <div class="card w-25 h-25 col-md-3">
+        <div class="card-body">
+            <h5 class="card-title fs-2" style="color: #2563eb;">{{categorias.length}}</h5>
+            <p class="card-text fs-5" style="color: #475569">Total Categorías</p>
+        </div>
+    </div>
+
+    <div class="card w-25 h-25 ms-5 col-md-3">
+        <div class="card-body">
+            <h5 class="card-title fs-2" style="color: #16a34a;">{{categoriasA.length}}</h5>
+            <p class="card-text fs-5" style="color: #475569">Activas</p>
+        </div>
+    </div>
+
+    <div class="card w-25 h-25 ms-5 col-md-3">
+        <div class="card-body">
+            <h5 class="card-title fs-2" style="color: #dc2626;">{{categoriasI.length}}</h5>
+            <p class="card-text fs-5" style="color: #475569">Inactivas</p>
+        </div>
+    </div>
+
+
+</div>
+
+<!--Modal-->
+<div class="modal fade" tabindex="-1" #modalCategoriaRef>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
+              {{isEditing ? 'Actualizar Categoria': 'Nueva Categoria'}}
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+            <form [formGroup]="formCategoria"  class="row g-3 mb-5">
+                <!--Campo Nombre-->
+                <div class="col-md-12">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" placeholder="Ej. Gasfiteria" formControlName="nombre">
+                    <span class="error">
+                        @if (this.formCategoria.get('nombre')?.invalid && this.formCategoria.get('nombre')?.dirty || this.formCategoria.get('nombre')?.touched) {
+                            @if (this.formCategoria.get('nombre')?.errors?.['required']) {
+                                Por favor, completa este campo.
+                            }
+
+                            @if (this.formCategoria.get('nombre')?.errors?.['minlength']) {
+                                Debe tener al menos 3 caracteres.
+                            }
+
+                            @if (this.formCategoria.get('nombre')?.errors?.['maxlength']) {
+                                No puede superar los 25 caracteres.
+                            }
+                        }
+                    </span>
+                </div>
+
+                <!--Campo Descripcion-->
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Describe el tipo de servicio" formControlName="descripcion" rows="3"></textarea>
+                    <span class="error">
+                        @if (this.formCategoria.get('descripcion')?.invalid && this.formCategoria.get('descripcion')?.dirty || this.formCategoria.get('descripcion')?.touched ) {
+                            @if (this.formCategoria.get('descripcion')?.errors?.['required']) {
+                                Porfavor Ingrese una descripción para la categoria
+                            }
+                            @if (this.formCategoria.get('descripcion')?.errors?.['minlength']) {
+                                Debe tener al menos 3 caracteres.
+                            }
+                        }
+                    </span>
+                </div>
+
+                <!--checkbox-->
+                <div>
+                    <input class="form-check-input me-1" type="checkbox" value="" formControlName="estado">
+                    <label class="form-check-label" >Disponible para trabajos</label>
+                </div>
+
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" (click)="guardar()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

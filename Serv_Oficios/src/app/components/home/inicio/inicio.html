@@ -1,0 +1,30 @@
+<div class="row m-0 min-vh-100">
+    <!-- SIDEBAR -->
+    <div class="col-12 col-md-3 col-lg-2 bg d-flex flex-column p-4 text-light">
+        <h1>Proyecto</h1>
+        <p>Panel de Gestión</p>
+        <hr>
+
+        <div class="d-flex flex-column gap-2">
+            <a class="navbar-brand menu-item d-flex align-items-center gap-2" routerLink="categoria-crud" routerLinkActive="active"><i class="bi bi-tag"></i>Categorias</a>
+
+            <a class="navbar-brand menu-item d-flex align-items-center gap-2"  routerLink="profesionales-crud" routerLinkActive="active"><i class="bi bi-person-video2"></i>Profesionales</a>
+
+            <a class="navbar-brand menu-item d-flex align-items-center gap-2"  href=""><i class="bi bi-file-person"></i>Clientes</a>
+
+            <a class="navbar-brand menu-item d-flex align-items-center gap-2"  href=""><i class="bi bi-tools"></i>Servicios</a>
+
+            <a class="navbar-brand menu-item d-flex align-items-center gap-2"  href=""><i class="bi bi-file-text"></i>Solicitudes</a>
+
+            <a class="navbar-brand menu-item d-flex align-items-center gap-2"  routerLink="resenas-crud"><i class="bi bi-star"></i>Reseñas</a>
+            
+        </div>
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="col-12 col-md-9 col-lg-10 min-vh-100">
+        <router-outlet></router-outlet>
+    </div>
+
+    
+</div>
