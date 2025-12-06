@@ -1,59 +1,142 @@
 {
+  "categorias": [
+    {
+      "nombre": "Gasfitería",
+      "descripcion": "Servicios de plomería y gasfitería",
+      "estado": "Activa",
+      "id": "1"
+    },
+    {
+      "nombre": "Electricidad",
+      "descripcion": "Instalaciones y reparaciones eléctricas",
+      "estado": "Activa",
+      "id": "2"
+    },
+    {
+      "nombre": "Albañilería",
+      "descripcion": "Construcción y reparaciones de obra",
+      "estado": "Activa",
+      "id": "3"
+    },
+    {
+      "nombre": "Limpieza",
+      "descripcion": "Servicios de limpieza profesional",
+      "estado": "Activa",
+      "id": "4"
+    },
+    {
+      "nombre": "Pintor",
+      "descripcion": "Aplicación de pintura, resanes y acabados para interiores y exteriores.",
+      "estado": "Inactiva",
+      "id": "2399"
+    },
+    {
+      "nombre": "Cerrajero",
+      "descripcion": "Experto en cerraduras, llaves, candados, puertas blindadas, instalación de cerrojos y apertura de puertas.",
+      "estado": "Inactiva",
+      "id": "b934"
+    },
+    {
+      "nombre": "Jardinero",
+      "descripcion": "Cuida, diseña y da mantenimiento a jardines, poda, siembra, riego, fertilización y control de plagas.",
+      "estado": "Inactiva",
+      "id": "77a9"
+    },
+    {
+      "nombre": "Técnico en Refrigeración",
+      "descripcion": "Instala y repara aires acondicionados, refrigeradoras, congeladores y sistemas de climatización.",
+      "estado": "Inactiva",
+      "id": "f3c1"
+    }
+  ],
   "profesionales": [
     {
-      "id": 1,
-      "foto": "https://img.freepik.com/foto-gratis/joven-hombre-barbudo-camisa-rayas_273609-5677.jpg?semt=ais_hybrid&w=740&q=80",
-      "nombreCompleto": "Bryan Carranza",
-      "numero": 980661525,
-      "correo": "ba",
-      "categoria": "gasfitero", 
-      "ciudad": "Cuenca",
-      "experiencia": "5 Años",
-      "estado": "Activo"
-    },
-    {
-      "id": 2,
-      "foto": "https://img.freepik.com/foto-gratis/joven-hombre-barbudo-camisa-rayas_273609-5677.jpg?semt=ais_hybrid&w=740&q=80",
-      "nombreCompleto": "Alex Carranza",
-      "numero": 980661525,
-      "correo": "ba",
-      "categoria": "gasfitero", 
-      "ciudad": "Quito",
-      "experiencia": "5 Años",
-      "estado": "Activo"
-    },
-    {
-      "id": 3,
-      "foto": "https://img.freepik.com/foto-gratis/joven-hombre-barbudo-camisa-rayas_273609-5677.jpg?semt=ais_hybrid&w=740&q=80",
-      "nombreCompleto": "Noemi Coello",
-      "numero": 980661525,
-      "correo": "ba",
-      "categoria": "Servicio de Limpieza", 
-      "ciudad": "Guayaquil",
-      "experiencia": "5 Años",
-      "estado": "Activo"
-    },
-    {
-      "id": 4,
       "foto": "https://img.freepik.com/foto-gratis/joven-hombre-barbudo-camisa-rayas_273609-5677.jpg?semt=ais_hybrid&w=740&q=80",
       "nombreCompleto": "Luis Franco",
-      "numero": 980661525,
-      "correo": "ba",
-      "categoria": "gasfitero", 
+      "numero": "0980661525",
+      "correo": "ba@gmail.com",
+      "categoria": "2",
       "ciudad": "Guayaquil",
       "experiencia": "5 Años",
-      "estado": "Activo"
+      "estado": "Disponible",
+      "id": "1"
     },
     {
-      "id": 5,
-      "foto": "https://img.freepik.com/foto-gratis/joven-hombre-barbudo-camisa-rayas_273609-5677.jpg?semt=ais_hybrid&w=740&q=80",
-      "nombreCompleto": "Jorge Perez",
-      "numero": 980661525,
-      "correo": "ba",
-      "categoria": "gasfitero", 
-      "ciudad": "Loja",
+      "foto": "https://images.squarespace-cdn.com/content/v1/5f632bf01807e96e340523c0/1652985648211-C73XPXO1FDM1YXHTV6SA/buyer-persona-branding",
+      "nombreCompleto": "Alex Carranza",
+      "numero": "0980661525",
+      "correo": "dana@gmail.com",
+      "categoria": 2,
+      "ciudad": "Quito",
       "experiencia": "5 Años",
-      "estado": "Activo"
+      "estado": "Disponible",
+      "id": "2"
+    },
+    {
+      "foto": "https://blog.oxfamintermon.org/wp-content/uploads/2018/05/derechos-de-las-mujeres.jpg",
+      "nombreCompleto": "Noemi Coello",
+      "numero": "0980661525",
+      "correo": "noe@gmail.com",
+      "categoria": 3,
+      "ciudad": "Guayaquil",
+      "experiencia": "5 Años",
+      "estado": "Disponible",
+      "id": "3"
+    },
+    {
+      "foto": "https://concepto.de/wp-content/uploads/2018/08/persona-e1533759204552.jpg",
+      "nombreCompleto": "Jorde Reyes",
+      "numero": "0980661525",
+      "correo": "franco@gmail.com",
+      "categoria": 4,
+      "ciudad": "Guayaquil",
+      "experiencia": "5 Años",
+      "estado": "Disponible",
+      "id": "4"
+    },
+    {
+      "foto": "https://img.freepik.com/foto-gratis/hombre-morena-sobre-fondo-blanco-aislado_1368-4404.jpg?semt=ais_hybrid&w=740&q=80",
+      "nombreCompleto": "Angel Alonso",
+      "numero": "0980616659",
+      "correo": "angel@gmail.com",
+      "categoria": "1",
+      "ciudad": "Manta",
+      "experiencia": "5 Años",
+      "estado": "Disponible",
+      "id": "94f3"
+    },
+    {
+      "id": "5bcb",
+      "foto": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "nombreCompleto": "Amanda Burgos",
+      "numero": "0950241525",
+      "correo": "amanda@gmail.com",
+      "categoria": "2",
+      "ciudad": "Guayaquil",
+      "experiencia": "5 Años",
+      "estado": "Disponible"
+    },
+    {
+      "id": "5f4c",
+      "foto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "nombreCompleto": "Daya Morales",
+      "numero": "0950646585",
+      "correo": "daya@gmail.com",
+      "categoria": "2",
+      "ciudad": "Manta",
+      "experiencia": "2 Años",
+      "estado": "Disponible"
+    },
+    {
+      "id": "c562",
+      "foto": "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "nombreCompleto": "Angelo Valdez",
+      "numero": "0965524585",
+      "correo": "angelo@gmail.com",
+      "categoria": "2",
+      "ciudad": "Manta",
+      "experiencia": "3 Años",
+      "estado": "Disponible"
     }
   ],
   "resenas": [
