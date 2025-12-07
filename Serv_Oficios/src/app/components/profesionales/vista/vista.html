@@ -1,0 +1,30 @@
+<div class="container d-flex flex-wrap gap-3 mt-3">
+    @if ((profesional).length === 0) {
+        <h1>No hay trabajadores</h1>
+    }
+    @else {
+        @for (p of profesional; track $index) { 
+            <div class="mb-3">
+                <div class="row row-cols-2">     
+                    <div class="col ">
+                        <div class="card" style="width: 18rem; height: 400px;">
+                            <div class="ratio ratio-16x9">
+                                <img [src]="p.foto" class="card-img-top " [alt]="p.categoria">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{p.nombreCompleto}}</h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{p.categoria}}</h6>
+                                <p class="card-text">{{p.categoria}}</p>
+                                @for (r of resenas; track $index) {
+                                    <strong><span>★ </span></strong><span></span>
+                                }
+                                <!--<p><strong>{{p.precio}}</strong></p>-->
+                                <a href="#" class="btn btn-primary" >Ver Perfil</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        }
+    }
+</div>

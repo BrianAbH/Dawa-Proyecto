@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
-import { Cards } from "../../../shared/cards/cards";
 
 @Component({
   selector: 'app-inicio',
-  imports: [RouterLink, RouterLinkActive, RouterOutlet, Cards],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './inicio.html',
   styleUrl: './inicio.css'
 })

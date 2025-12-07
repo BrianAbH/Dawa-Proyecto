@@ -36,6 +36,7 @@ export class CrudProfesionales {
   constructor(private miServicio:ServProfesionales, private router:Router, private fb:FormBuilder){
     this.cargarProfesionales();
     this.cargarCategorias();
+    //Inicializacion del form
     this.formProfesionales = this.fb.group({
       foto: ['',[Validators.required, validarUlr]],
       nombreCompleto:['',[Validators.required]],
@@ -48,49 +49,56 @@ export class CrudProfesionales {
     })
   }
 
- 
+  //Para la instancia del modal
   @ViewChild('modalProfesionalRef') modalElement!:ElementRef;
   ngAfterViewInit(){
     this.modalRef = new bootstrap.Modal(this.modalElement.nativeElement);
   }
 
+  //Obtiene un arreglo de profesionales
   cargarProfesionales(){
     this.miServicio.getProfesionales().subscribe(
       (data:Profesionales[])=>{
-        this.profesion = data;
+        this.profesion = data; //Se asigna los valores al arreglo creado en esta clase
       }
     )
   }
 
+  //Para abrir el modal cuando el caso es para crear un nuevo elemento
   abrirNuevo(){
     this.isEditing=null;
-    this.formProfesionales.reset();
+    this.formProfesionales.reset();//Limpia los campos del formulario en el modal
     this.modalRef.show();
   }
 
+  //Para abrir el modal cuando el caso es para editar un nuevo elemento
   editar(profesion:Profesionales){
     this.isEditing = profesion.id || null;
-    this.formProfesionales.patchValue(profesion);
+    // Normalizar estado para que el checkbox funcione
+    this.formProfesionales.patchValue({
+      ...profesion,
+      estado: profesion.estado === "Disponible"
+    });
     this.modalRef.show();
     
   }
 
+  //Metodo para guardar la informacion
   guardar(){
+    //Si el modal tiene campos invalidos marca todos los campos para que salten las validaciones
     if(this.formProfesionales.invalid){
       this.formProfesionales.markAllAsTouched();
       return;
     }
-
+    //Obtenemos todos los valores del formulario y lo asignamos a un arreglo
     const datos = this.formProfesionales.value;
 
-    if(datos.estado === true){
-      datos.estado = "Disponible";
-    }else{
-      datos.estado = "No disponible";
-    }
+    //Para establecer el estado dependiendo de los que se obtenga
+    datos.estado = datos.estado === true ? "Disponible" : "No disponible";
 
+    //Si existe el id significa que es para editar
     if(this.isEditing){
-      let profesionalEditar:Profesionales = {...datos, id:this.isEditing};
+      let profesionalEditar:Profesionales = {...datos, id:this.isEditing}; // 
       
       this.miServicio.actualizarProfesional(profesionalEditar).subscribe(
         ()=>{
@@ -101,7 +109,7 @@ export class CrudProfesionales {
       )
 
 
-    }else{
+    }else{//Para guardar un nuevo elemento
       let profesionalNuevo:Profesionales = {...datos};
       this.miServicio.nuevoProfesional(profesionalNuevo).subscribe(
       ()=>{
@@ -112,7 +120,7 @@ export class CrudProfesionales {
     }
   }
 
-
+  //Metodo para eliminar el elemento seleccionado--Eliminado logico
   eliminarProfesional(profesion:Profesionales){
     const msj = confirm(`Estas seguro que quieres eliminar a este profesional ${profesion.nombreCompleto}`);
     if(msj){
@@ -123,7 +131,7 @@ export class CrudProfesionales {
       );
     }
   }
-
+  //Metodo para obtener las categorias
   cargarCategorias(){
     this.miServicio.getCategorias().subscribe(
       (data:Categorias[])=>{
@@ -132,6 +140,7 @@ export class CrudProfesionales {
     )
   }
 
+  //Metodo para obtener la categoria por ID
   getCategorias(categoriaId:number):string{
     const catId = this.categorias.find(
       (g)=>Number(g.id)===Number(categoriaId)

@@ -87,7 +87,11 @@ export class CrudCategorias {
   //Se ejecuta al dar click en editar
   editar(categoria:Categorias){
     this.isEditing = categoria.id ?? null;
-    this.formCategoria.patchValue(categoria); //Sirve para llenar los componentes del formulario con los datos del objeto
+    // Normalizar estado para que el checkbox funcione
+    this.formCategoria.patchValue({ //Sirve para llenar los componentes del formulario con los datos del objeto
+      ...categoria,
+      estado: categoria.estado === "Activa"
+    }); 
     this.modalRef.show();
   }
 
@@ -102,11 +106,7 @@ export class CrudCategorias {
     const datos = this.formCategoria.value;//obtener todos los valores del componente form en un solo objeto
     
     //Estable los estados de las categorias
-    if(datos.estado ===true){ //en el caso de que sea true el checked si asigna activa a esa categoria
-      datos.estado = 'Activa';
-    }else{
-      datos.estado = 'Inactiva';
-    }
+    datos.estado = datos.estado === true ? "Activa" : "Inactiva";//en el caso de que sea true el checked si asigna activa a esa categoria
 
     if(this.isEditing){// si no es null estamos editando
       //establecer la categoria a editar

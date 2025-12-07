@@ -36,7 +36,12 @@
             </thead>
             <tbody>
                     @if (categorias.length===0) {
-                        <p>No hay</p>
+                        <tr>
+                            <td colspan="8" class="text-center py-4">
+                                <i class="bi bi-tag display-6 text-muted"></i>
+                                <p class="text-muted mt-2">No hay categorias para mostrar</p>
+                            </td>
+                        </tr>
                     }@else {
                         @for (c of categoriaPagina | filtrarC:filtro; track $index) {
                             <tr>

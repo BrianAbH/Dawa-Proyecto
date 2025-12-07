@@ -1,0 +1,241 @@
+<h5 class="p-3"> Clientes <hr></h5>
+
+<div class="card m-3 mw-100">
+  <div class="card-body row align-items-center">
+    <div class="col-12 col-sm-10 mb-3 mb-sm-0">
+        <h3 class="card-title"><i class="bi bi-people me-2"></i>Gestión de Clientes</h3>
+        <h6 class="card-subtitle mb-2 text-body-secondary">
+          Administra los clientes registrados en la plataforma.
+        </h6>
+    </div>
+
+    <div class="col-12 col-sm-2 text-sm-end">
+        <button class="b-style w-100 w-sm-auto mt-sm-2" (click)="abrirNuevo()">
+          <i class="bi bi-plus me-2 ms-4"></i>Nuevo Cliente
+        </button>
+    </div>
+  </div>
+</div>
+
+<!-- Componente Reutilizable -->
+<app-search
+    (searchChange)="filtrar($event)"
+    place="Buscar clientes por nombre, correo o ciudad...">
+</app-search>
+
+<!-- Tabla -->
+<div class="card m-3 p-3">
+    <table class="table table-responsive">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Contacto</th>
+                <th>Ciudad</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (clientes.length === 0) {
+                <p>No hay clientes registrados.</p>
+            } @else {
+                @for (c of clientesPagina | filtrarCl:filtro; track $index) {
+                    <tr>
+                        <!-- Nombre + foto -->
+                        <td class="row w-auto">
+                            <div class="col-md-2" style="width: 70px; height: 50px;">
+                                <img [src]="c.foto" class="img-fluid h-100 rounded-circle">
+                            </div>
+                            <div class="col-md-7">
+                                {{ c.nombreCompleto }}
+                            </div>
+                        </td>
+
+                        <!-- Contacto -->
+                        <td class="text-body-secondary">
+                            <i class="bi bi-envelope-at me-2"></i>{{ c.correo }}<br>
+                            <i class="bi bi-telephone me-2"></i>{{ c.numero }}
+                        </td>
+
+                        <!-- Ciudad -->
+                        <td>{{ c.ciudad }}</td>
+
+                        <!-- Estado -->
+                        <td>
+                            @if (c.estado === 'Activo') {
+                                <div class="rounded-5 badge text-success text-wrap" style="background-color: var(--bs-success-bg-subtle); width: 6rem;">
+                                    {{ c.estado }}
+                                </div>
+                            } @else {
+                                <div class="rounded-5 badge text-danger text-wrap" style="background-color: var(--bs-danger-bg-subtle); width: 6rem;">
+                                    {{ c.estado }}
+                                </div>
+                            }
+                        </td>
+
+                        <!-- Acciones -->
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button class="btn btn-outline-primary" (click)="editar(c)">
+                                    <i class="bi bi-pen"></i>
+                                </button>
+
+                                <button class="btn btn-outline-danger ms-2"
+                                    (click)="eliminarCliente(c)"
+                                    [disabled]="c.estado === 'Inactivo'">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <!-- PAGINACIÓN -->
+    @if (totalPages > 1) {
+        <nav>
+            <ul class="pagination justify-content-center">
+
+                <li class="page-item" [class.disabled]="page === 1">
+                    <button class="page-link" (click)="cambiarPagina(page - 1)">Anterior</button>
+                </li>
+
+                @for (i of [].constructor(totalPages); let idx = $index; track idx) {
+                    <li class="page-item" [class.active]="page === idx + 1">
+                        <button class="page-link" (click)="cambiarPagina(idx + 1)">
+                            {{ idx + 1 }}
+                        </button>
+                    </li>
+                }
+
+                <li class="page-item" [class.disabled]="page === totalPages">
+                    <button class="page-link" (click)="cambiarPagina(page + 1)">Siguiente</button>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>
+
+<!-- Modal Clientes -->
+<div class="modal fade" tabindex="-1" #modalClienteRef>
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!--HEADER-->
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">
+          {{ isEditing ? 'Actualizar Cliente' : 'Nuevo Cliente' }}
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!--BODY-->
+      <div class="modal-body">
+        <form [formGroup]="formClientes" class="row g-3 mb-5">
+
+          <!-- Nombre -->
+          <div class="col-md-6">
+            <label class="form-label">Nombre Completo</label>
+            <input type="text" class="form-control" placeholder="Juan Pérez" formControlName="nombreCompleto">
+            <span class="error">
+              @if ( formClientes.get('nombreCompleto')?.invalid && (formClientes.get('nombreCompleto')?.dirty || formClientes.get('nombreCompleto')?.touched) ) {
+                  @if (formClientes.get('nombreCompleto')?.errors?.['required']) {
+                      El nombre es obligatorio.
+                  }
+              }
+            </span>
+          </div>
+
+          <!-- Correo -->
+          <div class="col-md-6">
+            <label class="form-label">Correo</label>
+            <input type="text" class="form-control" placeholder="cliente@gmail.com" formControlName="correo">
+            <span class="error">
+              @if (formClientes.get('correo')?.invalid && (formClientes.get('correo')?.dirty || formClientes.get('correo')?.touched)) {
+                  @if (formClientes.get('correo')?.errors?.['required']) {
+                      El correo es obligatorio.
+                  }
+                  @if (formClientes.get('correo')?.errors?.['email']) {
+                      Ingresa un correo válido.
+                  }
+                  @if (formClientes.get('correo')?.errors?.['DominioInvalido']) {
+                      El correo debe terminar en .com
+                  }
+              }
+            </span>
+          </div>
+
+          <!-- Teléfono -->
+          <div class="col-md-6">
+            <label class="form-label">Teléfono</label>
+            <input type="text" class="form-control" placeholder="0987654321" formControlName="numero">
+            <span class="error">
+              @if (formClientes.get('numero')?.invalid && (formClientes.get('numero')?.dirty || formClientes.get('numero')?.touched)) {
+                @if (formClientes.get('numero')?.errors?.['required']) {
+                    El teléfono es obligatorio.
+                }
+                @if (formClientes.get('numero')?.errors?.['pattern']) {
+                    Solo se permiten números.
+                }
+                @if (formClientes.get('numero')?.errors?.['maxlength']) {
+                    Máximo 10 dígitos.
+                }
+              }
+            </span>
+          </div>
+
+          <!-- Ciudad -->
+          <div class="col-md-6">
+            <label class="form-label">Ciudad</label>
+            <select class="form-select" formControlName="ciudad">
+              <option>Guayaquil</option>
+              <option>Quito</option>
+              <option>Cuenca</option>
+              <option>Manta</option>
+            </select>
+            <span class="error">
+              @if (formClientes.get('ciudad')?.invalid && (formClientes.get('ciudad')?.dirty || formClientes.get('ciudad')?.touched)) {
+                @if (formClientes.get('ciudad')?.errors?.['required']) {
+                    Selecciona una ciudad.
+                }
+              }
+            </span>
+          </div>
+
+          <!-- Foto -->
+          <div class="col-12">
+            <label class="form-label">URL Foto</label>
+            <input type="url" class="form-control" placeholder="https://example.com" formControlName="foto">
+            <span class="error">
+              @if (formClientes.get('foto')?.invalid && (formClientes.get('foto')?.dirty || formClientes.get('foto')?.touched)) {
+                @if (formClientes.get('foto')?.errors?.['required']) {
+                    La foto es obligatoria.
+                }
+                @if (formClientes.get('foto')?.errors?.['urlInvalida']) {
+                    Ingresa una URL válida.
+                }
+              }
+            </span>
+          </div>
+
+          <!-- Estado -->
+          <div class="col-12 mt-2">
+            <input class="form-check-input me-1" type="checkbox" formControlName="estado">
+            <label class="form-check-label">Cliente Activo</label>
+          </div>
+
+        </form>
+      </div>
+
+      <!--FOOTER-->
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" (click)="guardar()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

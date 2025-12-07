@@ -27,7 +27,7 @@
     {
       "nombre": "Pintor",
       "descripcion": "Aplicación de pintura, resanes y acabados para interiores y exteriores.",
-      "estado": "Inactiva",
+      "estado": "Activa",
       "id": "2399"
     },
     {
@@ -91,7 +91,7 @@
       "categoria": 4,
       "ciudad": "Guayaquil",
       "experiencia": "5 Años",
-      "estado": "Disponible",
+      "estado": "No disponible",
       "id": "4"
     },
     {
@@ -102,11 +102,10 @@
       "categoria": "1",
       "ciudad": "Manta",
       "experiencia": "5 Años",
-      "estado": "Disponible",
+      "estado": "No disponible",
       "id": "94f3"
     },
     {
-      "id": "5bcb",
       "foto": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "nombreCompleto": "Amanda Burgos",
       "numero": "0950241525",
@@ -114,7 +113,8 @@
       "categoria": "2",
       "ciudad": "Guayaquil",
       "experiencia": "5 Años",
-      "estado": "Disponible"
+      "estado": "Disponible",
+      "id": "5bcb"
     },
     {
       "id": "5f4c",
@@ -128,7 +128,6 @@
       "estado": "Disponible"
     },
     {
-      "id": "c562",
       "foto": "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "nombreCompleto": "Angelo Valdez",
       "numero": "0965524585",
@@ -136,39 +135,108 @@
       "categoria": "2",
       "ciudad": "Manta",
       "experiencia": "3 Años",
-      "estado": "Disponible"
+      "estado": "Disponible",
+      "id": "c562"
+    }
+  ],
+  "clientes": [
+    {
+      "foto": "https://randomuser.me/api/portraits/men/12.jpg",
+      "nombreCompleto": "Carlos Mendoza",
+      "numero": "0987654321",
+      "correo": "carlosmen@gmail.com",
+      "ciudad": "Cuenca",
+      "estado": "Activo",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "foto": "https://randomuser.me/api/portraits/women/34.jpg",
+      "nombreCompleto": "María Fernanda Torres",
+      "numero": "0991234567",
+      "correo": "marianita@gmail.com",
+      "ciudad": "Guayaquil",
+      "estado": "Inactivo"
+    },
+    {
+      "id": "3",
+      "foto": "https://randomuser.me/api/portraits/men/47.jpg",
+      "nombreCompleto": "Jorge Luis Andrade",
+      "numero": "0978456123",
+      "correo": "jorgeLA@gmail.com",
+      "ciudad": "Cuenca",
+      "estado": "Activo"
+    },
+    {
+      "id": "4",
+      "foto": "https://randomuser.me/api/portraits/women/18.jpg",
+      "nombreCompleto": "Valeria Cruz",
+      "numero": "0981122334",
+      "correo": "valeria.cruz@gmail.com",
+      "ciudad": "Santo Domingo",
+      "estado": "Activo"
+    },
+    {
+      "id": "5",
+      "foto": "https://randomuser.me/api/portraits/men/8.jpg",
+      "nombreCompleto": "Luis Alberto Sánchez",
+      "numero": "0912345678",
+      "correo": "luisalbertosanz@gmail.com",
+      "ciudad": "Ambato",
+      "estado": "Inactivo"
+    },
+    {
+      "id": "6",
+      "foto": "https://randomuser.me/api/portraits/women/65.jpg",
+      "nombreCompleto": "Gabriela Molina",
+      "numero": "0989988776",
+      "correo": "gabriela.mol@gmail.com",
+      "ciudad": "Loja",
+      "estado": "Activo"
+    },
+    {
+      "id": "1742",
+      "foto": "https://images.ecestaticos.com/vU8sC8tLdkx-2YYh1fkOGL8vfeY=/0x0:990x557/1200x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F62c%2Fe5d%2F314%2F62ce5d3141c0b670144a692b7f6a21fa.jpg",
+      "nombreCompleto": "Jorge Luis",
+      "numero": "0985245215",
+      "correo": "jorge@gmail.com",
+      "ciudad": "Cuenca",
+      "estado": "Activo"
     }
   ],
   "resenas": [
     {
-      "id": 1,
+      "id": "1",
       "titulo": "Excelente servicio",
       "contenido": "El técnico fue muy puntual y resolvió el problema rápidamente. Muy profesional.",
       "calificacion": 5,
       "fecha": "2024-01-15",
       "solicitud_id": 101,
       "nombreUsuario": "María González",
-      "inicialesUsuario": "MG"
+      "inicialesUsuario": "MG",
+      "profesionalId": 1
     },
     {
-      "id": 2,
+      "id": "2",
       "titulo": "Buen trabajo pero con demora",
       "contenido": "La calidad del servicio fue buena, pero llegaron 30 minutos tarde a la cita programada.",
       "calificacion": 3,
       "fecha": "2024-01-10",
       "solicitud_id": 102,
       "nombreUsuario": "Carlos Rodríguez",
-      "inicialesUsuario": "CR"
+      "inicialesUsuario": "CR",
+      "profesionalId": 1
     },
     {
-      "id": 3,
+      "id": "3",
       "titulo": "No quedé satisfecho",
       "contenido": "El problema se volvió a presentar a los dos días. Tuve que solicitar otro servicio.",
       "calificacion": 1,
       "fecha": "2024-01-05",
       "solicitud_id": 103,
       "nombreUsuario": "Ana López",
-      "inicialesUsuario": "AL"
+      "inicialesUsuario": "AL",
+      "profesionalId": 1
     }
   ]
 }
