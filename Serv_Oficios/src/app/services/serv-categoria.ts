@@ -31,6 +31,11 @@ export class ServCategoria {
     );
   }
 
+  getCategoriaPorId(id:any):Observable<Categorias>{
+      return this.http.get<Categorias>(`${this.categoriaUrl}/${id}`);
+  }
+
+
   guardarCategoria(categoria:Categorias):Observable<Categorias>{
     return this.http.post<Categorias>(this.categoriaUrl, categoria);
   }

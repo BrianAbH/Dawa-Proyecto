@@ -1,12 +1,23 @@
-<div class="container-fluid mt-4" style="max-width: 1400px;">
-  <div class="row mb-4">
-    <div class="col-12">
-      <button class="btn btn-success btn-lg" (click)="openModal()">
-        <i class="bi bi-plus-circle"></i> Agregar Nuevo Servicio
+<h5 class="p-3"> Servicios <hr></h5>
+
+<div class="card m-3 mw-100">
+  <div class="card-body row align-items-center">
+    <div class="col-12 col-sm-10 mb-3 mb-sm-0">
+        <h3 class="card-title"><i class="bi bi-people me-2"></i>Gestión de Servicio</h3>
+        <h6 class="card-subtitle mb-2 text-body-secondary">
+          Administra los servicios ofrecidos
+        </h6>
+    </div>
+
+    <div class="col-12 col-sm-2 text-sm-end">
+        <button class="b-style w-100 w-sm-auto mt-sm-2" (click)="openModal()">
+        <i class="bi bi-plus-circle me-2 ms-4"></i> Agregar Nuevo Servicio
       </button>
     </div>
   </div>
+</div>
 
+<div class="container-fluid mt-4" style="max-width: 1400px;">
   <div class="row">
     <div class="col-12">
       <div class="row">
@@ -18,8 +29,8 @@
             <app-cards
               [titulo]="servicio.nombre"
               [categoria]="getCategoriaNombre(+servicio.categoria)"
-              [descripcion]="getProfesionalNombre(+servicio.profesional_id)"
-              [profesional]="servicio.profesional_id"
+              [descripcion]="servicio.descripcion"
+              [profesional]="getProfesionalNombre(servicio.profesional_id)"
               [precio]="servicio.precio"
               [activo]="servicio.activo ? 'Activo' : 'Inactivo'"
               class="flex-grow-1"

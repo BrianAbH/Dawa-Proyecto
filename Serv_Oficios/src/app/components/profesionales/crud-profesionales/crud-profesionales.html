@@ -1,5 +1,6 @@
 <h5 class="p-3"> Profesionales<hr></h5>
 
+
 <div class="card m-3 mw-100">
   <div class="card-body row align-items-center">
     <div class="col-12 col-sm-10 mb-3 mb-sm-0">
@@ -80,6 +81,7 @@
                             </td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                                    <button type="button" class="btn btn-outline-dark me-2" (click)="vista(p.id,p.categoria)"><i class="bi bi-eye"></i></button>
                                     <button type="button" class="btn btn-outline-primary" (click)="editar(p)"><i class="bi bi-pen"></i></button>
                                     @if (p.estado === 'No disponible') {
                                         <button type="button" class="btn btn-outline-danger ms-2" disabled (click)="eliminarProfesional(p)"><i class="bi bi-trash"></i></button>

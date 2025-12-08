@@ -33,6 +33,7 @@ export class CrudProfesionales {
     this.filtro = texto;
   }
 
+  //Constructor de la clase
   constructor(private miServicio:ServProfesionales, private router:Router, private fb:FormBuilder){
     this.cargarProfesionales();
     this.cargarCategorias();
@@ -148,16 +149,19 @@ export class CrudProfesionales {
     return catId ? catId.nombre : "Sin categoria";
   }
 
+  vista(id:number | undefined, idCat:number |undefined){
+    this.router.navigate(['/profesionales-vista/',id,idCat]);
+  }
+
+
   //Metodos para lograr la paginacion
     get totalPages(): number {
       return Math.ceil(this.profesion.length / this.pageSize);
     }
-  
     get profesionalPagina(): Profesionales[] {
       const start = (this.page - 1) * this.pageSize;
       return this.profesion.slice(start, start + this.pageSize);
     }
-  
     cambiarPagina(n: number) {
       if (n < 1 || n > this.totalPages) return;
       this.page = n;

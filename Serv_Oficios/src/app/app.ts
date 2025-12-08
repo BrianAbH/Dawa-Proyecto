@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Inicio } from "./components/home/inicio/inicio";
 import { Vista } from "./components/profesionales/vista/vista";
 
 @Component({
   selector: 'app-root',
-  imports: [Inicio],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

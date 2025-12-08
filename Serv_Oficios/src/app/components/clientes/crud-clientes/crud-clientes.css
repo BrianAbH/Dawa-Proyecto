@@ -1,0 +1,41 @@
+
+.cliente-card {
+  background: white;
+  border-radius: 12px;
+  transition: all .2s ease;
+}
+
+.cliente-card:hover {
+  transform: translateY(-3px);
+}
+
+.avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #0d6efd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar-text {
+  letter-spacing: 1px;
+}
+
+.disabled-icon {
+  opacity: 0.3;
+  pointer-events: none;
+}
+

@@ -23,100 +23,92 @@
     place="Buscar clientes por nombre, correo o ciudad...">
 </app-search>
 
-<!-- Tabla -->
+<!-- Cards -->
 <div class="card m-3 p-3">
-    <table class="table table-responsive">
-        <thead class="table-dark">
-            <tr>
-                <th>Nombre</th>
-                <th>Contacto</th>
-                <th>Ciudad</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
 
-        <tbody>
-            @if (clientes.length === 0) {
-                <p>No hay clientes registrados.</p>
-            } @else {
-                @for (c of clientesPagina | filtrarCl:filtro; track $index) {
-                    <tr>
-                        <!-- Nombre + foto -->
-                        <td class="row w-auto">
-                            <div class="col-md-2" style="width: 70px; height: 50px;">
-                                <img [src]="c.foto" class="img-fluid h-100 rounded-circle">
-                            </div>
-                            <div class="col-md-7">
-                                {{ c.nombreCompleto }}
-                            </div>
-                        </td>
+  <div class="row">
+    @if (clientes.length === 0) {
+      <p>No hay clientes registrados.</p>
+    } @else {
+      @for (c of clientesPagina | filtrarCl:filtro; track $index) {
+        <div class="col-md-4 mb-4">
+          <div class="cliente-card shadow-sm p-3 rounded">
 
-                        <!-- Contacto -->
-                        <td class="text-body-secondary">
-                            <i class="bi bi-envelope-at me-2"></i>{{ c.correo }}<br>
-                            <i class="bi bi-telephone me-2"></i>{{ c.numero }}
-                        </td>
+            <!-- Header: Avatar + nombre + acciones -->
+            <div class="d-flex align-items-center">
 
-                        <!-- Ciudad -->
-                        <td>{{ c.ciudad }}</td>
-
-                        <!-- Estado -->
-                        <td>
-                            @if (c.estado === 'Activo') {
-                                <div class="rounded-5 badge text-success text-wrap" style="background-color: var(--bs-success-bg-subtle); width: 6rem;">
-                                    {{ c.estado }}
-                                </div>
-                            } @else {
-                                <div class="rounded-5 badge text-danger text-wrap" style="background-color: var(--bs-danger-bg-subtle); width: 6rem;">
-                                    {{ c.estado }}
-                                </div>
-                            }
-                        </td>
-
-                        <!-- Acciones -->
-                        <td>
-                            <div class="btn-group btn-group-sm" role="group">
-                                <button class="btn btn-outline-primary" (click)="editar(c)">
-                                    <i class="bi bi-pen"></i>
-                                </button>
-
-                                <button class="btn btn-outline-danger ms-2"
-                                    (click)="eliminarCliente(c)"
-                                    [disabled]="c.estado === 'Inactivo'">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+              <!-- Avatar -->
+              <div class="avatar me-3">
+                @if (c.foto) {
+                  <img [src]="c.foto" class="avatar-img">
+                } @else {
+                  <div class="avatar-text">{{ iniciales(c.nombreCompleto) }}</div>
                 }
-            }
-        </tbody>
-    </table>
+              </div>
 
-    <!-- PAGINACIÓN -->
-    @if (totalPages > 1) {
-        <nav>
-            <ul class="pagination justify-content-center">
+              <div class="w-100 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">{{ c.nombreCompleto }}</h5>
 
-                <li class="page-item" [class.disabled]="page === 1">
-                    <button class="page-link" (click)="cambiarPagina(page - 1)">Anterior</button>
-                </li>
+                <!-- Acciones -->
+                <div>
+                  <i class="bi bi-pencil-square text-primary me-2"
+                     role="button" (click)="editar(c)">
+                  </i>
 
-                @for (i of [].constructor(totalPages); let idx = $index; track idx) {
-                    <li class="page-item" [class.active]="page === idx + 1">
-                        <button class="page-link" (click)="cambiarPagina(idx + 1)">
-                            {{ idx + 1 }}
-                        </button>
-                    </li>
-                }
+                  <i class="bi bi-trash text-danger"
+                     role="button"
+                     (click)="eliminarCliente(c)"
+                     [ngClass]="{'disabled-icon': c.estado === 'Inactivo'}">
+                  </i>
+                </div>
+              </div>
+            </div>
 
-                <li class="page-item" [class.disabled]="page === totalPages">
-                    <button class="page-link" (click)="cambiarPagina(page + 1)">Siguiente</button>
-                </li>
-            </ul>
-        </nav>
+            <!-- Información -->
+            <div class="mt-3">
+
+              <p class="mb-1">
+                <i class="bi bi-envelope text-primary me-2"></i> {{ c.correo }}
+              </p>
+
+              <p class="mb-1">
+                <i class="bi bi-telephone text-success me-2"></i> {{ c.numero }}
+              </p>
+
+              <p class="mb-1">
+                <i class="bi bi-geo-alt text-danger me-2"></i> {{ c.ciudad }}
+              </p>
+
+            </div>
+
+          </div>
+        </div>
+      }
     }
+  </div>
+
+  <!-- PAGINACIÓN -->
+  @if (totalPages > 1) {
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="page === 1">
+                <button class="page-link" (click)="cambiarPagina(page - 1)">Anterior</button>
+            </li>
+
+            @for (i of [].constructor(totalPages); let idx = $index; track idx) {
+                <li class="page-item" [class.active]="page === idx + 1">
+                    <button class="page-link" (click)="cambiarPagina(idx + 1)">
+                        {{ idx + 1 }}
+                    </button>
+                </li>
+            }
+
+            <li class="page-item" [class.disabled]="page === totalPages">
+                <button class="page-link" (click)="cambiarPagina(page + 1)">Siguiente</button>
+            </li>
+        </ul>
+    </nav>
+  }
 </div>
 
 <!-- Modal Clientes -->
@@ -193,6 +185,9 @@
             <select class="form-select" formControlName="ciudad">
               <option>Guayaquil</option>
               <option>Quito</option>
+              <option>Santo Domingo</option>
+              <option>Ambato</option>
+              <option>Loja</option>
               <option>Cuenca</option>
               <option>Manta</option>
             </select>

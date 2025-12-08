@@ -1,0 +1,44 @@
+.bg{
+    background-color:  #131C2F;
+}
+
+p{
+    color: whitesmoke;
+}
+
+h1{
+    background: linear-gradient(to right, #1E90FF, #00BFFF);
+    background-clip: text;
+    --webkit-background-clip: text;
+    color: transparent;
+}
+
+hr{
+    color: white;
+}
+li{
+    list-style-type: none;
+}
+
+
+.menu-item {
+    padding: 12px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.menu-active {
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    color: white !important;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+}

@@ -65,7 +65,7 @@
       "foto": "https://images.squarespace-cdn.com/content/v1/5f632bf01807e96e340523c0/1652985648211-C73XPXO1FDM1YXHTV6SA/buyer-persona-branding",
       "nombreCompleto": "Alex Carranza",
       "numero": "0980661525",
-      "correo": "dana@gmail.com",
+      "correo": "alex@gmail.com",
       "categoria": 2,
       "ciudad": "Quito",
       "experiencia": "5 Años",
@@ -103,7 +103,7 @@
       "ciudad": "Manta",
       "experiencia": "5 Años",
       "estado": "No disponible",
-      "id": "94f3"
+      "id": "5"
     },
     {
       "foto": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -237,6 +237,28 @@
       "nombreUsuario": "Ana López",
       "inicialesUsuario": "AL",
       "profesionalId": 1
+    }
+  ],
+  "servicios": [
+    {
+      "id": "c4f8",
+      "nombre": "Reparación de cañerías",
+      "descripcion": "Reparación de filtraciones y cañerías rotas\n\n",
+      "categoria": "2",
+      "precio": 23,
+      "duracionEstimada": "1",
+      "profesional_id": "1",
+      "activo": true
+    },
+    {
+      "id": "7ecc",
+      "nombre": "Instalación eléctrica",
+      "descripcion": "Instalación completa de sistema eléctrico",
+      "categoria": "2",
+      "precio": 20,
+      "duracionEstimada": "1",
+      "profesional_id": "3",
+      "activo": true
     }
   ]
 }

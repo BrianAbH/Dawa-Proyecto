@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, forkJoin } from 'rxjs'; // ← Importa forkJoin
+import { Observable, map, forkJoin } from 'rxjs';
 import { Servicio } from '../../models/servicios';
 import { Categorias } from '../../models/categorias';
-import { Profesionales } from '../../models/profesionales'; 
+import { Profesionales } from '../../models/profesionales';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,11 @@ export class CrudServicios implements OnInit {
   servicios: Servicio[] = [];
   categorias: Categorias[] = [];
   profesionales: Profesionales[] = [];
+  
+
+  categoriaMap: {[key: number]: string} = {};
+  profesionalMap: {[key: number]: string} = {};
+  
   servicioForm: FormGroup;
   servicioEdit: Servicio | null = null;
   isEditing: boolean = false;
@@ -39,10 +44,10 @@ export class CrudServicios implements OnInit {
   }
 
   ngOnInit() {
-    this.loadAllData(); // ← Carga todo en paralelo
+    this.loadAllData();
   }
 
-  // ← NUEVO: Carga todas las listas al mismo tiempo
+
   loadAllData() {
     forkJoin({
       servicios: this.servServicios.getServicios(),
@@ -53,9 +58,30 @@ export class CrudServicios implements OnInit {
         this.servicios = data.servicios;
         this.categorias = data.categorias;
         this.profesionales = data.profesionales;
+        
+
+        this.buildMaps();
       },
       error: (error) => {
         console.error('Error al cargar datos:', error);
+      }
+    });
+  }
+
+
+
+  private buildMaps(): void {
+    this.categoriaMap = {};
+    this.categorias.forEach(cat => {
+      if (cat.id !== undefined) {
+        this.categoriaMap[cat.id] = cat.nombre;
+      }
+    });
+
+    this.profesionalMap = {};
+    this.profesionales.forEach(prof => {
+      if (prof.id !== undefined) {
+        this.profesionalMap[prof.id] = prof.nombreCompleto;
       }
     });
   }
@@ -69,17 +95,15 @@ export class CrudServicios implements OnInit {
     }
   }
 
+
   getCategoriaNombre(id: number | string): string {
-  const categoria = this.categorias.find(c => c.id === Number(id));
-  return categoria ? categoria.nombre : 'N/A';
-}
+    return this.categoriaMap[Number(id)] || 'N/A';
+  }
 
-getProfesionalNombre(id: number | string): string {
-  const profesional = this.profesionales.find(p => p.id === Number(id));
-  return profesional ? profesional.nombreCompleto : 'N/A';
-}
+  getProfesionalNombre(id: number | string): string {
+    return this.profesionalMap[Number(id)] || 'N/A';
+  }
 
-  
   createForm(): FormGroup {
     return this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -122,9 +146,6 @@ getProfesionalNombre(id: number | string): string {
     this.resetForm();
   }
 
-  // Ya no necesitas este método separado
-  // loadServicios() { ... }
-
   view(id: number | undefined) {
     if (id) this.router.navigate(['/servicio-view/', id]);
   }
@@ -136,7 +157,7 @@ getProfesionalNombre(id: number | string): string {
         this.servicios = data;
       });
     } else {
-      this.loadAllData(); // ← Recarga todos los datos
+      this.loadAllData();
     }
   }
 

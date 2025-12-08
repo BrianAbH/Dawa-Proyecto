@@ -6,13 +6,15 @@ import { Search } from "../../../shared/search/search";
 import { FiltroClientes } from '../../../pipes/filtros';
 import { validarCorreo, validarUlr } from '../../../validators/Validators';
 import { ServClientes } from '../../../services/serv-clientes';
+import { CommonModule } from '@angular/common';
 
 declare const bootstrap: any;
 
 @Component({
   selector: 'app-crud-clientes',
-  imports: [ReactiveFormsModule, Search, FiltroClientes],
+  imports: [CommonModule,ReactiveFormsModule,ReactiveFormsModule, Search, FiltroClientes],
   templateUrl: './crud-clientes.html',
+  styleUrls: ['./crud-clientes.css']
 })
 export class CrudClientes {
 
@@ -20,7 +22,7 @@ export class CrudClientes {
   isEditing: number | null = null;
 
   page = 1;
-  pageSize = 7;
+  pageSize = 9;
 
   modalRef: any;
 
@@ -132,6 +134,15 @@ export class CrudClientes {
   get clientesPagina(): Clientes[] {
     const start = (this.page - 1) * this.pageSize;
     return this.clientes.slice(start, start + this.pageSize);
+  }
+
+  // Iniciales del nombre
+  iniciales(nombre: string): string {
+    return nombre
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase();
   }
 
   // Metodo de cambiar pagina
